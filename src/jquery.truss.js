@@ -1,4 +1,4 @@
-// Adds vendor-prefixed support to $.css for transform & transition
+
 (function($){
 
 	if(!$.cssHooks){
@@ -7,15 +7,16 @@
 
 	function styleSupport(prop){
 		var vendorProp, supportedProp,
-		    capProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-		    prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-		    div = document.createElement('div'),
-		    i = 0;
+			capProp = ('-' + prop).replace(/-([a-z]?)/gi, function(m){
+				return m[1].toUpperCase();
+			}),
+		    prefixes = ['Moz', 'Webkit', 'O', 'ms'], i = 4,
+		    div = document.createElement('div');
 
 		if(prop in div.style){
 			supportedProp = prop;
 		}else{
-			for(; i < 4; i++){
+			while(i--){
 				vendorProp = prefixes[i] + capProp;
 				if(vendorProp in div.style){
 					supportedProp = vendorProp;
