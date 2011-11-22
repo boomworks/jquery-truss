@@ -1,3 +1,11 @@
+/**
+* @license
+* jQuery Truss - CSS3 vendor prefix support for jQuery
+*
+* Copyright (c) 2011 Boomworks <http://boomworks.com.au/>
+* Author: Lindsay Evans
+* Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+*/
 
 (function($){
 
@@ -51,5 +59,7 @@
 	addVendorPrefixSupport('transition-duration');
 	addVendorPrefixSupport('transition-timing-function');
 	addVendorPrefixSupport('transition-delay');
+
+	// TODO: everything else
 
 })(jQuery);
