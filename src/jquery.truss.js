@@ -42,12 +42,27 @@
 		if(prop && prop !== name){
 			$.cssHooks[name] = {
 				get: function(elem, computed, extra){
-					return $.css(elem, prop);
+//console.info('$.cssHooks['+name+'].get('+prop+') ['+elem.style[prop]+']')
+					return elem.style[prop];
 				},
 				set: function(elem, value){
+//console.info('$.cssHooks['+name+'].set('+prop+','+value+')')
 					elem.style[prop] = value;
 				}
 			};
+
+			if(name === 'transform'){
+				// TODO: support other transforms
+				$.fx.step[name] = function(fx){
+//console.info('$.fx.step['+name+']('+fx.start+','+fx.now+','+fx.end+')')
+					var start = parseInt(fx.start.match(/rotate\(([-0-9]+)deg\)/)[1]),
+						end = parseInt(fx.end.match(/rotate\(([-0-9]+)deg\)/)[1]),
+						now = parseInt(fx.now.match(/rotate\(([-0-9]+)deg\)/)[1]),
+						next = 'rotate(' + (start + (end - start) * fx.state) + 'deg)';
+					$.cssHooks[name].set(fx.elem, next);
+				};
+			}
+
 		}
 	}
 
